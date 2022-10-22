@@ -8,13 +8,15 @@ class Repository {
     }
 
     async findAll() {
+        logger(LOG_LEVEL.LOG_INFO, "Running Repository::findAll");
+
         try {
             return await this.model.findAll();
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
             throw new ApiException(
                 HTTP_CODE.INTERNAL_SERVER_ERROR,
-                error.message
+                error.name == "SequelizeDatabaseError" ? "Erro ao conectar ao banco de dados" : error.message
             );
         }
     }
