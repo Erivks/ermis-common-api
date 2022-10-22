@@ -1,0 +1,9 @@
+{
+    "name": "common",
+    "version": "1.0.0",
+    "description": "common para funções e constantes globais",
+    "main": "app.js",
+    "type": "module",
+    "license": "MIT"
+  }
+  
