@@ -1,13 +1,8 @@
-import ResponsibleRepository from "../repository/ResponsibleRepository";
-import { LOG_LEVEL } from "../../../../../../common/constants/main";
-import logger from "../../../../../../common/functions/logger";
+import ResponsibleRepository from "../repository/ResponsibleRepository.js";
+import Service from "../../../../../core/classes/Service.js";
+import { LOG_LEVEL, HTTP_CODE } from "../../../../../core/constants/main.js";
+import logger from "../../../../../core/functions/logger.js";
 
-class ResponsibleService {
-    async create(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running ResponsibleService::create")
+class ResponsibleService extends Service {}
 
-        const result = ResponsibleRepository.create(req);
-
-        return result;
-    }
-}
+export default new ResponsibleService(ResponsibleRepository);

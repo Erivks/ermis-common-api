@@ -1,7 +1,7 @@
 import BusinessModel from "../../modules/business/model/BusinessModel.js";
 import ResponsibleModel from "../../modules/responsible/model/ResponsibleModel.js";
-import { LOG_LEVEL } from '../../../../../core/common/constants/main.js';
-import logger from '../../../../../core/common/functions/logger.js';
+import { LOG_LEVEL } from '../../../../core/constants/main.js';
+import logger from '../../../../core/functions/logger.js';
 
 try {
     const options = { force: true };

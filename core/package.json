@@ -4,6 +4,8 @@
     "description": "common para funções e constantes globais",
     "main": "app.js",
     "type": "module",
-    "license": "MIT"
-  }
-  
+    "license": "MIT",
+    "dependencies": {
+        "express-validator": "^6.14.2"
+    }
+}

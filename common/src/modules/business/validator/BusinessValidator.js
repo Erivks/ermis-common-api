@@ -1,8 +1,9 @@
 import { body, param } from 'express-validator';
 import { LOG_LEVEL } from '../../../../../core/constants/main.js';
 import logger from '../../../../../core/functions/logger.js';
+import Validator from '../../../../../core/classes/Validator.js';
 
-class BusinessValidator {
+class BusinessValidator extends Validator {
     create() {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessValidator::create");
         return [
@@ -65,30 +66,6 @@ class BusinessValidator {
                 .isString()
                 .isNumeric()
                 .isLength({ min: 11 })
-        ];
-    }
-
-    byID() {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessValidator::byID");
-        return [
-            param('id')
-                .notEmpty()
-                .withMessage('param "id" must be present')
-                .isNumeric()
-                .withMessage('param "id" must be numeric')
-        ];
-    }
-
-    byCNPJ() {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessValidator::byCNPJ");
-        return [
-            param('cnpj')
-                .notEmpty()
-                .withMessage('param "cnpj" must be present')
-                .isLength({ min: 14 })
-                .withMessage('CNPJ must contains 14 chars')
-                .isNumeric()
-                .withMessage('param "cnpj" must be numeric')
         ];
     }
 

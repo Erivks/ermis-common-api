@@ -7,6 +7,23 @@ class Repository {
         this.model = model;
     }
 
+    async create(body) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running Repository::create");
+
+            await this.model.create(body);
+            return { status: HTTP_CODE.CREATED, message: "Created Successfully!"};
+            
+        } catch (error) {
+            let msg = error.original ? error.original.sqlMessage : error.message;
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${msg}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                msg
+            );
+        }
+    }
+
     async findAll() {
         logger(LOG_LEVEL.LOG_INFO, "Running Repository::findAll");
 
@@ -23,7 +40,19 @@ class Repository {
 
     async findByID(id) {
         try {
-            return await this.model.findByPk(id)
+            return await this.model.findByPk(id);
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                error.message
+            );
+        }
+    }
+
+    async findBy(param) {
+        try {
+            return await this.model.findOne({ where: param });
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
             throw new ApiException(

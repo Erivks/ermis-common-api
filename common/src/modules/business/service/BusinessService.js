@@ -3,42 +3,9 @@ import BusinessRepository from '../repository/BusinessRepository.js';
 import { validationResult } from "express-validator";
 import { HTTP_CODE, LOG_LEVEL } from '../../../../../core/constants/main.js';
 import logger from '../../../../../core/functions/logger.js';
+import Service from '../../../../../core/classes/Service.js';
 
-class BusinessService {
-    async findAll() {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::findAll");
-        
-        let result = await BusinessRepository.findAll();
-        if (!result) {
-            throw new ApiException(
-                HTTP_CODE.INTERNAL_SERVER_ERROR, 
-                "Unable to get business data!"
-            );
-        }
-        return {
-            status: HTTP_CODE.OK,
-            result
-        }
-    }
-
-    async findByID(id) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::findByID");
-        
-        const result = await BusinessRepository.findByID(id);
-        if (!result) {
-            let msg = `Could not find ID: ${id}`;
-            logger(LOG_LEVEL.LOG_WARN, msg); 
-            return {
-                status: HTTP_CODE.OK,
-                message: msg
-            }
-        }
-        return { 
-            status: HTTP_CODE.OK,
-            message: result
-        };
-    }
-
+class BusinessService extends Service {
     async updateBy(req) {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateBy");
 
@@ -129,4 +96,4 @@ class BusinessService {
     }
 }
 
-export default new BusinessService();
+export default new BusinessService(BusinessRepository);
