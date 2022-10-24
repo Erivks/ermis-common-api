@@ -3,8 +3,9 @@ import BusinessService from "../../business/service/BusinessService.js";
 import logger from "../../../../../core/functions/logger.js";
 import { HTTP_CODE, LOG_LEVEL } from "../../../../../core/constants/main.js";
 import ApiException from "../../../../../core/exceptions/ApiException.js";
+import Controller from "../../../../../core/classes/Controller.js";
 
-class ResponsibleController {
+class ResponsibleController extends Controller {
     async findByBusinessID(req, res) {
         logger(LOG_LEVEL.LOG_INFO, "Running ResponsibleController::findByBusinessID");
         
@@ -55,4 +56,4 @@ class ResponsibleController {
     }
 }
 
-export default new ResponsibleController();
+export default new ResponsibleController(ResponsibleService);

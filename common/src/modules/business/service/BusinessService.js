@@ -6,19 +6,6 @@ import logger from '../../../../../core/functions/logger.js';
 import Service from '../../../../../core/classes/Service.js';
 
 class BusinessService extends Service {
-    async updateBy(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::updateBy");
-
-        const body      = this.validateRequest(req);
-        const params    = this.validateParams(req);
-        const object    = this.getValueForUpdate(params);
-
-        const result = await BusinessRepository.updateBy(object, body);
-
-        this.checkUpdateResult(result);
-        return { status: HTTP_CODE.OK }
-    }
-
     getValueForUpdate(params) {
         switch (Object.keys(params)[0]) {
             case 'id':
@@ -44,55 +31,6 @@ class BusinessService extends Service {
         const result = await BusinessRepository.deleteByID(params.id);
 
         return { status: HTTP_CODE.OK };
-    }
-
-    checkUpdateResult(result) {
-        if (typeof result == "object" && result[0] === 0) {
-            logger(LOG_LEVEL.LOG_ERR, `Row affected for Business updateByID: ${JSON.stringify(result)}`);
-            throw new ApiException(
-                HTTP_CODE.INTERNAL_SERVER_ERROR,
-                "Update failed"
-            );
-        }
-    }
-
-    validateParams(req) {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()) {
-            throw new ApiException(
-                HTTP_CODE.BAD_REQUEST,
-                errors.mapped()
-            );
-        }
-
-        if (!req.params) {
-            throw new ApiException(
-                HTTP_CODE.BAD_REQUEST,
-                "Params is empty"
-            );
-        }
-
-        return req.params;
-    }
-
-    validateRequest(req) {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()) {
-            throw new ApiException(
-                HTTP_CODE.BAD_REQUEST,
-                errors.mapped()
-            );
-        }
-
-        if (!req.body) {
-            throw new ApiException(
-                HTTP_CODE.BAD_REQUEST,
-                "Body is empty"
-            );
-        }
-
-        return req.body;
-
     }
 }
 

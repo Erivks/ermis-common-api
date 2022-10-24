@@ -1,5 +1,6 @@
 import ApiException from '../exceptions/ApiException.js';
 import { HTTP_CODE, LOG_LEVEL } from "../constants/main.js";
+import { validationResult } from "express-validator";
 import logger from '../functions/logger.js';
 
 class Service {
@@ -65,6 +66,76 @@ class Service {
             status: HTTP_CODE.OK,
             message: result
         };
+    }
+
+    async updateBy(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Running Service::updateBy");
+
+        const body      = this.validateRequest(req);
+        const params    = this.validateParams(req);
+        const object    = this.getValueForUpdate(params);
+
+        const result = await this.repository.updateBy(object, body);
+
+        this.checkUpdateResult(result);
+        return { status: HTTP_CODE.OK }
+    }
+
+    validateRequest(req) {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            throw new ApiException(
+                HTTP_CODE.BAD_REQUEST,
+                errors.mapped()
+            );
+        }
+
+        if (!req.body) {
+            throw new ApiException(
+                HTTP_CODE.BAD_REQUEST,
+                "Body is empty"
+            );
+        }
+
+        return req.body;
+    }
+
+    validateParams(req) {
+        const errors = validationResult(req.params);
+        if(!errors.isEmpty()) {
+            throw new ApiException(
+                HTTP_CODE.BAD_REQUEST,
+                errors.mapped()
+            );
+        }
+
+        if (!req.params) {
+            throw new ApiException(
+                HTTP_CODE.BAD_REQUEST,
+                "Params is empty"
+            );
+        }
+
+        return req.params;
+    }
+
+    getValueForUpdate(params) {
+        switch (Object.keys(params)[0]) {
+            case 'id':
+                return { id: params.id }
+            case 'cnpj':
+                return { cnpj: params.cnpj }
+        }
+    }
+
+    checkUpdateResult(result) {
+        if (typeof result == "object" && result[0] === 0) {
+            logger(LOG_LEVEL.LOG_ERR, `Row affected for updateBy: ${JSON.stringify(result)}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                "Update failed"
+            );
+        }
     }
 }
 
