@@ -50,6 +50,24 @@ class Service {
         };
     }
 
+    async findManyBy(param) {
+        logger(LOG_LEVEL.LOG_INFO, "Running Service::findManyBy");
+        
+        const result = await this.repository.findManyBy(param);
+        if (!result) {
+            let msg = `Could not find by: ${JSON.stringify(param)}`;
+            logger(LOG_LEVEL.LOG_WARN, msg); 
+            return {
+                status: HTTP_CODE.OK,
+                message: msg
+            }
+        }
+        return { 
+            status: HTTP_CODE.OK,
+            message: result
+        };
+    }
+
     async findByID(id) {
         logger(LOG_LEVEL.LOG_INFO, "Running Service::findByID")
 
@@ -101,7 +119,7 @@ class Service {
     }
 
     validateParams(req) {
-        const errors = validationResult(req.params);
+        const errors = validationResult(req);
         if(!errors.isEmpty()) {
             throw new ApiException(
                 HTTP_CODE.BAD_REQUEST,

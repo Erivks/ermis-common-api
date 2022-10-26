@@ -62,6 +62,18 @@ class Repository {
         }
     }
 
+    async findManyBy(param) {
+        try {
+            return await this.model.findAndCountAll({ where: param });
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                error.message
+            );
+        }
+    }
+
     async updateBy(object, body) {
         try {
             const result = await this.model.update(body, {

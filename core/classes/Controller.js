@@ -104,6 +104,28 @@ class Controller {
             });
         }
     }
+
+    async updateByCNPJ(req, res) {
+        try {
+            logger(LOG_LEVEL.LOG_INFO, "Running Controller::updateByCNPJ");
+
+            const result = await this.service.updateBy(req);
+            const response = {
+                status: result.status,
+                message: "Update successfully!"
+            };
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            res.status(result.status).json(response);
+
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, error.message);
+            let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
+            return res.status(status).json({
+                status: status,
+                message: error.message
+            });
+        }
+    }
 }
 
 export default Controller;
