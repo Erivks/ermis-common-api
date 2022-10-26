@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import Controller from '../../../../../core/classes/Controller.js';
-import BusinessController from '../controller/BusinessController.js';
+import BranchContoller from '../controller/BranchController.js';
 import BusinessValidator from '../validator/BusinessValidator.js';
 
 const router = new Router();
@@ -11,7 +11,7 @@ router.post(`${baseUrl}/create`, BusinessValidator.create(), BusinessController.
 
 //== READ ==
 router.get(`${baseUrl}/findAll`, BusinessController.findAll.bind(BusinessController));
-router.get(`${baseUrl}/findByID/:id`, BusinessValidator.byID(), BusinessController.findByID.bind(BusinessController));
+router.get(`${baseUrl}/findByBusinessID/:id`, BranchContoller.byID(), BranchContoller.findByBusinessID);
 
 //== UPDATE ==
 router.put(`${baseUrl}/updateByID/:id`, BusinessValidator.byID(), BusinessValidator.update(), BusinessController.updateByID.bind(BusinessController));
