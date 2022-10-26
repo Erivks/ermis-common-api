@@ -10,10 +10,6 @@ router.get(`${baseUrl}/findByBusinessID/:id`, ResponsibleValidator.byID(), Respo
 router.get(`${baseUrl}/findByBusinessCNPJ/:cnpj`, ResponsibleValidator.byCNPJ(), ResponsibleController.findByBusinessCNPJ);
 
 //== UPDATE ==
-router.put(`${baseUrl}/updateByID/:id`, ResponsibleValidator.byID(), ResponsibleValidator.update(), ResponsibleController.updateByID);
-//router.put(`${baseUrl}/updateByCNPJ/:cnpj`, BusinessValidator.byCNPJ(), BusinessValidator.update(), BusinessController.updateByCNPJ);
-
-//== DELETE ==
-//router.delete(`${baseUrl}/deleteByID/:id`, BusinessValidator.byID(), BusinessController.deleteByID);
+router.put(`${baseUrl}/updateByID/:id`, ResponsibleValidator.byID(), ResponsibleValidator.update(), ResponsibleController.updateByID.bind(ResponsibleController));
 
 export default router;
