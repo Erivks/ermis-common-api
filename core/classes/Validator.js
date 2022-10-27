@@ -15,7 +15,7 @@ class Validator {
     }
 
     byCNPJ() {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessValidator::byCNPJ");
+        logger(LOG_LEVEL.LOG_INFO, "Running Validator::byCNPJ");
         return [
             param('cnpj')
                 .notEmpty()
@@ -24,6 +24,82 @@ class Validator {
                 .withMessage('CNPJ must contains 14 chars')
                 .isNumeric()
                 .withMessage('param "cnpj" must be numeric')
+        ];
+    }
+
+    address() {
+        logger(LOG_LEVEL.LOG_INFO, "Running Validator::address");
+        return [
+            body('address')
+                .isString()
+                .isLength({ min: 5, max: 200 })
+                .notEmpty(),
+            body('number')
+                .isString()
+                .isLength({ max: 10 })
+                .notEmpty(),
+            body('district')
+                .isString()
+                .isLength({ max: 100 })
+                .notEmpty(),
+            body('city')
+                .isString()
+                .isLength({ max: 100 })
+                .notEmpty(),
+            body('state')
+                .isString()
+                .isLength({ min: 2 })
+                .notEmpty(),
+            body('complement')
+                .isString()
+                .isLength({ max: 150 })
+                .optional()
+        ];
+    }
+
+    responsible() {
+        logger(LOG_LEVEL.LOG_INFO, "Running Validator::responsible");
+        return [
+            body('responsible')
+                .notEmpty()
+                .isObject(),
+            body('responsible.name')
+                .notEmpty()
+                .isString()
+                .isLength({ max: 200 }),
+            body('responsible.telephone')
+                .notEmpty()
+                .isString()
+                .isNumeric()
+                .isLength({ max: 15 }),
+            body('responsible.cpf')
+                .notEmpty()
+                .isString()
+                .isNumeric()
+                .isLength({ min: 11 })
+        ];
+    }
+
+    responsibleOptional() {
+        logger(LOG_LEVEL.LOG_INFO, "Running Validator::responsibleOptional");
+        return [
+            body('responsible')
+                .optional()
+                .isObject(),
+            body('responsible.name')
+                .notEmpty()
+                .isString()
+                .isLength({ max: 200 }),
+            body('responsible.telephone')
+                .notEmpty()
+                .isString()
+                .isNumeric()
+                .isLength({ max: 15 }),
+            body('responsible.cpf')
+                .notEmpty()
+                .isString()
+                .isNumeric()
+                .isLength({ min: 11 })
         ];
     }
 }

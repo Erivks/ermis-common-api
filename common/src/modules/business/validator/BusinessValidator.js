@@ -6,7 +6,7 @@ import Validator from '../../../../../core/classes/Validator.js';
 class BusinessValidator extends Validator {
     create() {
         logger(LOG_LEVEL.LOG_INFO, "Running BusinessValidator::create");
-        return [
+        let validations = [
             body('cnpj')
                 .isString()
                 .withMessage('CNPJ must be a string')
@@ -24,30 +24,6 @@ class BusinessValidator extends Validator {
             body('trading_name')
                 .isString()
                 .withMessage('trading_name must be a string')
-                .optional(),
-            body('address')
-                .isString()
-                .isLength({ min: 5, max: 200 })
-                .notEmpty(),
-            body('number')
-                .isString()
-                .isLength({ max: 10 })
-                .notEmpty(),
-            body('district')
-                .isString()
-                .isLength({ max: 100 })
-                .notEmpty(),
-            body('city')
-                .isString()
-                .isLength({ max: 100 })
-                .notEmpty(),
-            body('state')
-                .isString()
-                .isLength({ min: 2 })
-                .notEmpty(),
-            body('complement')
-                .isString()
-                .isLength({ max: 150 })
                 .optional(),
             body('responsible')
                 .notEmpty()
@@ -67,6 +43,10 @@ class BusinessValidator extends Validator {
                 .isNumeric()
                 .isLength({ min: 11 })
         ];
+
+        validations.push(this.address());
+
+        return validations;
     }
 
     update() {

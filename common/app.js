@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import BusinessRoutes from './src/modules/business/routes/BusinessRoutes.js';
 import ResponsibleRoutes from './src/modules/responsible/routes/ResponsibleRoutes.js';
+import BranchRoutes from './src/modules/branch/routes/BranchRoutes.js';
 import middlewareLogger from './src/config/middleware/logger.js';
 import logger from '../core/functions/logger.js';
 import { LOG_LEVEL } from '../core/constants/main.js';
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(middlewareLogger);
 app.use(BusinessRoutes);
 app.use(ResponsibleRoutes);
+app.use(BranchRoutes);
 
 app.get('/api/status', (req, res) => {
     return res.sendStatus(200).json({

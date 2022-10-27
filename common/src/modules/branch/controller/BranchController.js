@@ -1,4 +1,3 @@
-import BusinessService from "../service/BusinessService.js";
 import logger from "../../../../../core/functions/logger.js";
 import { HTTP_CODE, LOG_LEVEL } from "../../../../../core/constants/main.js";
 import Controller from "../../../../../core/classes/Controller.js";
@@ -27,4 +26,4 @@ class BranchController extends Controller {
     }
 }
 
-export default new BranchController(BusinessService);
+export default new BranchController(BranchService);
