@@ -6,7 +6,7 @@ import BranchService from "../service/BranchService.js";
 class BranchController extends Controller {
 
     async findAllByBusinessID(req, res) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BranchController::findAllByBusinessID");
+        logger(LOG_LEVEL.LOG_INFO, "Start - BranchController::findAllByBusinessID");
         
         try {
             let params = BranchService.validateParams(req);

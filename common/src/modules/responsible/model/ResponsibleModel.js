@@ -29,6 +29,11 @@ const ResponsibleModel = db.define('tbl_responsible', {
             len: 11
         }
     }
-});
+},
+{ 
+    paranoid: true, 
+    timestamps: true 
+}
+);
 
 export default ResponsibleModel;

@@ -2,6 +2,7 @@ import BusinessModel from "../../modules/business/model/BusinessModel.js";
 import BranchModel from "../../modules/branch/model/BranchModel.js";
 import { LOG_LEVEL } from '../../../../core/constants/main.js'
 import logger from '../../../../core/functions/logger.js';
+import ResponsibleModel from "../../modules/responsible/model/ResponsibleModel.js";
 
 class Entity {
     async business() {
@@ -9,13 +10,25 @@ class Entity {
         
         BusinessModel.create({
             cnpj: "12345678910112",
-            name: "Demo",
+            company_name: "Demo",
+            trading_name: "Demo",
             address: "Rua Carlos Henrique",
             number: "11",
             district: "Miguel Couto",
             city: "Nova Iguaçu",
             state: "RJ",
-            complement: "Atrás da Clinica da Familia"
+            complement: "Atrás da Clinica da Familia",
+            id_responsible: 1
+        });
+    }
+
+    async responsible() {
+        await ResponsibleModel.sync();
+
+        ResponsibleModel.create({
+            name: "Erick Oliveira",
+            telephone: "21966757404",
+            cpf: "19712566765"
         });
     }
 
@@ -35,12 +48,15 @@ class Entity {
     }
 }
 
-export default async function seed() {
+async function seed() {
     try {
         const entity = new Entity();
+        await entity.responsible();
         await entity.business();
         await entity.branch();
     } catch (error) {
         logger(LOG_LEVEL.LOG_ERR, error.message);
     }
 }
+
+seed();

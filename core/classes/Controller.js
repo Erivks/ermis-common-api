@@ -7,7 +7,7 @@ class Controller {
     }
 
     async create(req, res) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Controller::create");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Controller::create");
 
         try {           
             const result = await this.service.create(req);
@@ -32,7 +32,7 @@ class Controller {
     }
 
     async findAll(req, res) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Controller::findAll");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Controller::findAll");
         
         try {
             let response = await this.service.findAll();
@@ -51,7 +51,7 @@ class Controller {
     }
 
     async findByID(req, res) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Controller::findByID");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Controller::findByID");
 
         try {
             const result = await this.service.findByID(req.params.id);
@@ -67,14 +67,28 @@ class Controller {
         }
     }
 
+    async findByCPF(req, res) {
+        logger(LOG_LEVEL.LOG_INFO, "Start - Controller::findByCPF");
+
+        try {
+            let params = this.service.validateParams(req);
+            const result = await this.service.findBy({ cpf: params.cpf});
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(result)}`);
+            return res.status(result.status).json(result); 
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, error.message);
+            let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
+            return res.status(status).json({
+                status: status,
+                message: error.message
+            });
+        }
+    }
+
     async updateByID(req, res) {
         try {
-            logger(LOG_LEVEL.LOG_INFO, "Running Controller::updateByID");
-            const result = await this.service.updateBy(req);
-            let response = {
-                status: result.status,
-                message: "Updated successfully!"
-            };
+            logger(LOG_LEVEL.LOG_INFO, "Start - Controller::updateByID");
+            const response = await this.service.updateBy(req);
             logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
             res.status(result.status).json(response);
         } catch (error) {
@@ -89,12 +103,12 @@ class Controller {
         }
     }
 
-    async deleteByID(req, res) {
+    async updateByCNPJ(req, res) {
         try {
-            logger(LOG_LEVEL.LOG_INFO, "Running Controller::deleteByID");
-            const result = await BusinessService.deleteByID(req);
-            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(result)}`);
-            return res.status(result.status).json(result);
+            logger(LOG_LEVEL.LOG_INFO, "Start - Controller::updateByCNPJ");
+            const response = await this.service.updateBy(req);
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
+            res.status(result.status).json(response);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
@@ -105,18 +119,12 @@ class Controller {
         }
     }
 
-    async updateByCNPJ(req, res) {
+    async deleteByID(req, res) {
         try {
-            logger(LOG_LEVEL.LOG_INFO, "Running Controller::updateByCNPJ");
-
-            const result = await this.service.updateBy(req);
-            const response = {
-                status: result.status,
-                message: "Update successfully!"
-            };
-            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
-            res.status(result.status).json(response);
-
+            logger(LOG_LEVEL.LOG_INFO, "Start - Controller::deleteByID");
+            const result = await this.service.deleteByID(req);
+            logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(result)}`);
+            return res.status(result.status).json(result);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;

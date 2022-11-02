@@ -16,7 +16,7 @@ class BusinessService extends Service {
     }
 
     async create(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running BusinessService::create");
+        logger(LOG_LEVEL.LOG_INFO, "Start - BusinessService::create");
 
         const body = this.validateRequest(req);
 

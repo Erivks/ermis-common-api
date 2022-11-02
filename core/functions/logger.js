@@ -1,6 +1,5 @@
 import { CLI_COLOURS, LOG_LEVEL } from '../constants/main.js';
-import { getCurrentDate } from './date.js';
-import { getCurrentHour } from './time.js';
+import { getCurrentDate, getCurrentHour } from './time.js';
 
 function getColorPerLevel(logLevel) {
     switch (logLevel) {

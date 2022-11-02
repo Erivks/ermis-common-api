@@ -5,7 +5,7 @@ import Validator from '../../../../../core/classes/Validator.js';
 
 class ResponsibleValidator extends Validator {
     update() {
-        logger(LOG_LEVEL.LOG_INFO, "Running ResponsibleValidator::update");
+        logger(LOG_LEVEL.LOG_INFO, "Start - ResponsibleValidator::update");
         return [
             body('cnpj')
                 .isString()

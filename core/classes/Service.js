@@ -9,7 +9,7 @@ class Service {
     }
 
     async create(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Service::create")
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::create")
 
         const result = this.repository.create(req);
 
@@ -17,7 +17,7 @@ class Service {
     }
 
     async findAll() {
-        logger(LOG_LEVEL.LOG_INFO, "Running Service::findAll");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::findAll");
         
         let result = await this.repository.findAll();
         if (!result) {
@@ -33,7 +33,7 @@ class Service {
     }
 
     async findBy(param) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Service::findBy");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::findBy");
         
         const result = await this.repository.findBy(param);
         if (!result) {
@@ -51,7 +51,7 @@ class Service {
     }
 
     async findManyBy(param) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Service::findManyBy");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::findManyBy");
         
         const result = await this.repository.findManyBy(param);
         if (!result) {
@@ -69,7 +69,7 @@ class Service {
     }
 
     async findByID(id) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Service::findByID")
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::findByID")
 
         const result = await this.repository.findByID(id);
         if (!result) {
@@ -87,7 +87,7 @@ class Service {
     }
 
     async updateBy(req) {
-        logger(LOG_LEVEL.LOG_INFO, "Running Service::updateBy");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::updateBy");
 
         const body      = this.validateRequest(req);
         const params    = this.validateParams(req);
@@ -96,7 +96,16 @@ class Service {
         const result = await this.repository.updateBy(object, body);
 
         this.checkUpdateResult(result);
-        return { status: HTTP_CODE.OK }
+        return { status: HTTP_CODE.OK, message: "Updated Sucessfully!" }
+    }
+
+    async deleteByID(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Start - Service::deleteByID");
+
+        const params = this.validateParams(req);
+        await this.repository.deleteByID({ id_branch: params.id });
+
+        return { status: HTTP_CODE.OK, message: "Deleted!" };
     }
 
     validateRequest(req) {

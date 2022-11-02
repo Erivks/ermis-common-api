@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "startDev": "nodemon app.js",
-    "createTables": "node src/config/db/createTables.js"
+    "createTables": "node src/config/db/createTables.js",
+    "seed": "node src/config/db/seeder.js"
   },
   "dependencies": {
     "dotenv": "^16.0.0",

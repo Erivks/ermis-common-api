@@ -14,8 +14,8 @@ router.get(`${baseUrl}/findAll`, BusinessController.findAll.bind(BusinessControl
 router.get(`${baseUrl}/findByID/:id`, BusinessValidator.byID(), BusinessController.findByID.bind(BusinessController));
 
 //== UPDATE ==
-router.put(`${baseUrl}/updateByID/:id`, BusinessValidator.byID(), BusinessValidator.update(), BusinessController.updateByID.bind(BusinessController));
-router.put(`${baseUrl}/updateByCNPJ/:cnpj`, BusinessValidator.byCNPJ(), BusinessValidator.update(), BusinessController.updateByCNPJ.bind(BusinessController));
+router.put(`${baseUrl}/updateByID/:id`, BusinessValidator.byID(), BusinessValidator.updateBusiness(), BusinessController.updateByID.bind(BusinessController));
+router.put(`${baseUrl}/updateByCNPJ/:cnpj`, BusinessValidator.byCNPJ(), BusinessValidator.updateBusiness(), BusinessController.updateByCNPJ.bind(BusinessController));
 
 //== DELETE ==
 router.delete(`${baseUrl}/deleteByID/:id`, BusinessValidator.byID(), BusinessController.deleteByID.bind(BusinessController));

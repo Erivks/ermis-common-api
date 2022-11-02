@@ -7,7 +7,7 @@ import Controller from "../../../../../core/classes/Controller.js";
 
 class ResponsibleController extends Controller {
     async findByBusinessID(req, res) {
-        logger(LOG_LEVEL.LOG_INFO, "Running ResponsibleController::findByBusinessID");
+        logger(LOG_LEVEL.LOG_INFO, "Start - ResponsibleController::findByBusinessID");
         
         try {
             let response            = await BusinessService.findByID(req.params.id);
@@ -31,7 +31,7 @@ class ResponsibleController extends Controller {
     }
 
     async findByBusinessCNPJ(req, res) {
-        logger(LOG_LEVEL.LOG_INFO, "Running ResponsibleController::findByBusinessCNPJ");
+        logger(LOG_LEVEL.LOG_INFO, "Start - ResponsibleController::findByBusinessCNPJ");
 
         try {
             const cnpj              = req.params.cnpj;

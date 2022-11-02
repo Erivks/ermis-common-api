@@ -9,10 +9,10 @@ class Repository {
 
     async create(body) {
         try {
-            logger(LOG_LEVEL.LOG_INFO, "Running Repository::create");
+            logger(LOG_LEVEL.LOG_INFO, "Start - Repository::create");
 
-            await this.model.create(body);
-            return { status: HTTP_CODE.CREATED, message: "Created Successfully!"};
+            let data = await this.model.create(body);
+            return { status: HTTP_CODE.CREATED, message: "Created Successfully!", data: data };
             
         } catch (error) {
             let msg = error.original ? error.original.sqlMessage : error.message;
@@ -25,7 +25,7 @@ class Repository {
     }
 
     async findAll() {
-        logger(LOG_LEVEL.LOG_INFO, "Running Repository::findAll");
+        logger(LOG_LEVEL.LOG_INFO, "Start - Repository::findAll");
 
         try {
             return await this.model.findAll();
@@ -90,17 +90,8 @@ class Repository {
         }
     }
 
-    async deleteByID(id) {
-        try {
-            const result = await this.model.destroy({ where: { id_business: id }});
-            return result;
-        } catch (error) {
-            logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
-            throw new ApiException(
-                HTTP_CODE.INTERNAL_SERVER_ERROR,
-                error.message
-            );
-        }
+    async deleteByID(object) {
+        return await this.model.destroy({ where: object });
     }
 }
 

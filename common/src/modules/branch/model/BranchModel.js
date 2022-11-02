@@ -1,6 +1,7 @@
 import BusinessModel from '../../business/model/BusinessModel.js';
 import { DataTypes } from 'sequelize';
 import db from '../../../config/db/dbConfig.js';
+import ResponsibleModel from '../../responsible/model/ResponsibleModel.js';
 
 const BranchModel = db.define('tbl_branch', {
     id_branch: {
@@ -65,9 +66,10 @@ BusinessModel.hasMany(BranchModel, {
     foreignKey: 'id_business'
 });
 
-BranchModel.Business = BranchModel.belongsTo(BusinessModel, {
-    as: 'business',
-    foreignKey: 'id_business'
+ResponsibleModel.hasOne(BranchModel, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT',
+    foreignKey: 'id_responsible'
 });
 
 export default BranchModel;

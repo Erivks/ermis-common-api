@@ -5,7 +5,7 @@ import Validator from '../../../../../core/classes/Validator.js';
 
 class BranchValidator extends Validator {
     create() {
-        logger(LOG_LEVEL.LOG_INFO, "Running BranchValidator::create");
+        logger(LOG_LEVEL.LOG_INFO, "Start - BranchValidator::create");
 
         let validations = [
             body('cnpj')
