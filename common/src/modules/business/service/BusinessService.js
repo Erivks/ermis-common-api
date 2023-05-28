@@ -26,11 +26,13 @@ class BusinessService extends Service {
     }
 
     async deleteByID(req) {
+        logger(LOG_LEVEL.LOG_INFO, "Start - BusinessService::deleteByID");
+
         const params = this.validateParams(req);
 
-        const result = await BusinessRepository.deleteByID(params.id);
+        await this.repository.deleteByID({id_business: params.id});
 
-        return { status: HTTP_CODE.OK };
+        return { status: HTTP_CODE.OK, message: "Deleted!" };
     }
 }
 

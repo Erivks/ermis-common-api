@@ -93,17 +93,17 @@ class Service {
         const params    = this.validateParams(req);
         const object    = this.getValueForUpdate(params);
 
-        const result = await this.repository.updateBy(object, body);
+        await this.repository.updateBy(object, body);
 
-        this.checkUpdateResult(result);
+        //this.checkUpdateResult(result);
         return { status: HTTP_CODE.OK, message: "Updated Sucessfully!" }
     }
 
     async deleteByID(req) {
         logger(LOG_LEVEL.LOG_INFO, "Start - Service::deleteByID");
 
-        const params = this.validateParams(req);
-        await this.repository.deleteByID({ id_branch: params.id });
+        //const params = this.validateParams(req);
+        await this.repository.deleteByID(obj);
 
         return { status: HTTP_CODE.OK, message: "Deleted!" };
     }
@@ -117,7 +117,7 @@ class Service {
             );
         }
 
-        if (!req.body) {
+        if (this.isEmptyObject(req.body)) {
             throw new ApiException(
                 HTTP_CODE.BAD_REQUEST,
                 "Body is empty"
@@ -163,6 +163,10 @@ class Service {
                 "Update failed"
             );
         }
+    }
+
+    isEmptyObject(obj) {
+        return JSON.stringify(obj) === '{}'
     }
 }
 

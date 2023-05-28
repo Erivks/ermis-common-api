@@ -90,7 +90,7 @@ class Controller {
             logger(LOG_LEVEL.LOG_INFO, "Start - Controller::updateByID");
             const response = await this.service.updateBy(req);
             logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
-            res.status(result.status).json(response);
+            res.status(response.status).json(response);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
@@ -108,7 +108,7 @@ class Controller {
             logger(LOG_LEVEL.LOG_INFO, "Start - Controller::updateByCNPJ");
             const response = await this.service.updateBy(req);
             logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(response)}`);
-            res.status(result.status).json(response);
+            res.status(response.status).json(response);
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, error.message);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
@@ -122,11 +122,13 @@ class Controller {
     async deleteByID(req, res) {
         try {
             logger(LOG_LEVEL.LOG_INFO, "Start - Controller::deleteByID");
+            
             const result = await this.service.deleteByID(req);
+            
             logger(LOG_LEVEL.LOG_INFO, `Response: ${JSON.stringify(result)}`);
             return res.status(result.status).json(result);
         } catch (error) {
-            logger(LOG_LEVEL.LOG_ERR, error.message);
+            logger(LOG_LEVEL.LOG_ERR, `Controller::deleteByID - ${error.message}`);
             let status = error.status || HTTP_CODE.INTERNAL_SERVER_ERROR;
             return res.status(status).json({
                 status: status,

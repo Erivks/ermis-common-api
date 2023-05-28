@@ -75,12 +75,13 @@ class Repository {
     }
 
     async updateBy(object, body) {
+        logger(LOG_LEVEL.LOG_INFO, "Start - Repository::updateBy")
+
         try {
-            const result = await this.model.update(body, {
+            await this.model.update(body, {
                 where: object
             });
 
-            return result;
         } catch (error) {
             logger(LOG_LEVEL.LOG_ERR, `ERROR - ${error.message}`);
             throw new ApiException(
@@ -91,7 +92,17 @@ class Repository {
     }
 
     async deleteByID(object) {
-        return await this.model.destroy({ where: object });
+        logger(LOG_LEVEL.LOG_INFO, "Start - Repository::deleteByID")
+
+        try {
+            return await this.model.destroy({ where: object });
+        } catch (error) {
+            logger(LOG_LEVEL.LOG_ERR, `Repository::deleteByID - ${error.message}`);
+            throw new ApiException(
+                HTTP_CODE.INTERNAL_SERVER_ERROR,
+                error.message
+            );
+        }
     }
 }
 
